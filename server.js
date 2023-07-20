@@ -1,9 +1,28 @@
 const express = require("express");
 const path = require("path");
 const helmet = require('helmet');
+const fs = require('fs');
+const key = fs.readFileSync('key.pem');
+const cert = fs.readFileSync('cert.pem');
+const https = require('https');
+const port = 7474;
 
-var app = express();
-var server = app.listen(7474,"192.168.2.101",function () {
+const options = {
+    key: key,
+    cert: cert
+};
+
+var app = express(options);
+// const server = https.createServer({key: key, cert: cert }, app);
+
+// app.get('/',(req,res,next)=>{
+//     res.status(200).send("olaaa");
+// })
+
+// server.listen(port,()=>{
+//     console.log("ola");
+// })
+var server = app.listen(7474,function () {
   console.log("Listening on port 3000");
 });
 
